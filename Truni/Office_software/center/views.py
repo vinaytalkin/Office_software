@@ -46,7 +46,7 @@ def Login_view(request):
         # import pdb
         # pdb.set_trace()
         if user:
-            #auth_login(request, user)
+            auth_login(request, user)
             msg="authenticated"
             next_url = request.GET.get("next","userpage/")
             return redirect(userdetails_view)
