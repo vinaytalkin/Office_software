@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'center.middlewares.RequestTrackerMiddleware'
 ]
 
 ROOT_URLCONF = 'Office_software.urls'
