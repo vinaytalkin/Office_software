@@ -1,4 +1,4 @@
-{% extends "center/home.html" %}
+
 {% include 'material/includes/material_css.html' %}
 {% include 'material/includes/material_js.html' %}
 {% block content%}
@@ -6,15 +6,22 @@
 {% load material_form %}
       <h4>{{ message }}</h4>
     <h1><b>Application Form & Joining Form </b></h1>
-      <form class="form-horizontal" method="post">
-        {% csrf_token %}
-          <h4>{{ message }}</h4>
-         {% form form=form %}
-          {% endform %}
-          <button>Submit</button>
+   <form method="POST">
+    {% csrf_token %}
 
+    {% form %}
 
-      </form>
+        {% part form.username prefix %}<i class="material-icons prefix">account_box</i>{% endpart %}
+        {% part form.email prefix %}<i class="material-icons prefix">email</i>{% endpart %}
+        {% part form.password prefix %}<i class="material-icons prefix">lock_open</i>{% endpart %}
+       {% part form.dob prefix %}<i class="material-icons prefix">insert_invitation</i>{% endpart %}
+       {% part form.personalcontactno prefix %}<i class="material-icons prefix">call</i>{% endpart %}
+       {% part form.emergencycontactno prefix %}<i class="material-icons prefix">call</i>{% endpart %}
+
+    {% endform %}
+    <button type="submit" class="btn">Submit</button>
+</form>
+
 {% endblock %}
 
 
