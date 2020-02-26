@@ -13,25 +13,35 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+
 from django.contrib import admin
-from django.urls import path
-from center.views import home_view, career_view, contactus_view, Registration_view, Login_view, aboutus_view,userdetails_view,Forgotpassword_view
+from django.urls import path, re_path,include
+from center.views import home_view, career_view,editandsubmit,myview, contactus_view,Registration_view, Login_view, aboutus_view,userdetails_view,Forgotpassword_view,previewdetails
+from center.form import Registration_model,Registration_Preview
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
+
+
 urlpatterns = [
+
     path('admin/', admin.site.urls),
     path('',home_view),
     path('home/',home_view),
     path('career/',career_view),
-    path('contactus/',contactus_view),
+    #path('contactus/',contactus_view,name='contactus'),
     path('register/',Registration_view),
     path('signin/',Login_view,name='login'),
     path('aboutus/',aboutus_view),
     path('userprofile/',userdetails_view),
     path('forgot_password/',Forgotpassword_view),
+    path('preview/',previewdetails,name='preview'),
+    path('editandsubmit/',editandsubmit,name='editandsubmit'),
+    path('contactus/',myview,name='contactus'),
+
+    #re_path('grid_json/', djqgrid.urls),
+
 
     path(
         'change-password/',
@@ -68,6 +78,7 @@ urlpatterns = [
          name='password_reset_complete'),
 
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)

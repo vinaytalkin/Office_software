@@ -2,7 +2,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import auth_login
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .form import Registration_model, ChoiceFieldForm  # RegistrationForm
+from django_tables2 import SingleTableView
+from formtools.preview import FormPreview
+from formtools.wizard.views import SessionWizardView
+
+from center.form import Registration_model, Registration_Preview, MyGrid  # RegistrationForm
 from center.models import Registration
 # Create your views here.
 
@@ -54,6 +58,7 @@ def Login_view(request):
             if user:
                 #login(request, user)
                 msg = "authenticated"
+
                 next_url = request.GET.get("next", "userpage/")
                 return redirect(userdetails_view)
             else:
@@ -62,6 +67,34 @@ def Login_view(request):
             msg = "not authenticated"
 
     return render(request, "center/signin.html", {"message": msg})
+
+def previewdetails(request):
+    if request.method == 'GET':
+        form = Registration_model()
+        #form = Registration_model(instance=form)
+        for fieldname in form.fields:
+            form.fields[fieldname].disabled = True
+        return render(request, 'center/preview.html', {'form': form})
+
+def editandsubmit(request):
+    mess = ''
+    if request.method == 'GET':
+        data = request.POST
+        newset= data[0]
+        form = Registration_model(instance=newset)
+
+    else:
+        form = Registration_model()
+        # form_choice = ChoiceFieldForm()
+    return render(request, 'center/RegistrationForm.html', {'form': form, 'message': mess})
+
+def myview(tables):
+    grid = MyGrid()
+    table_class = MyGrid()
+    grid = Registration.objects.all()
+    template_name = "center/contactus.html"
+    #return render('center/contactus.html', { grid: grid })
+
 
 
 def Forgotpassword_view(request):
@@ -79,12 +112,13 @@ def career_view(request):
     return render(request, 'center/career.html')
 
 
+
 def contactus_view(request):
-    form = ChoiceFieldForm()
-    if form:
-        return form
-    return render(request, 'center/contactus.html', {'form': form})
+
+
+    return render(request, 'center/contactus.html')#{'form': form}
 
 
 def aboutus_view(request):
     return render(request, 'center/aboutus.html')
+

@@ -44,7 +44,7 @@ class Registration(models.Model):
     previous_empoyee_to = models.DateField(blank=True)
     # photoidproofimage = models.FileField(blank=True, null=True)
     pan_no = models.CharField(max_length=250, blank=True)
-    banke_details_for_salary = models.CharField(max_length=100)
+    bank_details_for_salary = models.CharField(max_length=100)
     active_user = models.BooleanField()
     Empinfo = (
         ('F', 'Full Time'),
@@ -54,7 +54,11 @@ class Registration(models.Model):
     employee_info = models.CharField(choices=Empinfo, max_length=10)
     agreeterms = models.BooleanField()
 
+    def __str__(self):
+        return self.user_id
+
 
 class UserImagesUpload(models.Model):
     name = models.CharField(max_length=50)
     userprofile = models.ImageField(upload_to='images/')
+

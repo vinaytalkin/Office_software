@@ -1,4 +1,8 @@
-<<!doctype html>
+{% load django_tables2 %}
+{% render_table table %}
+
+<!doctype html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,8 +12,17 @@
     <title>Document</title>
 </head>
 <body>
+<form method="POST">
+
+    {% csrf_token %}
 <h4>{{ message }}</h4>
-{{ form.as_p }}
+
+
+    <div id="grid-div">
+        {% jqgrid grid %}
+    </div>
+<button>submit</button>
+</form>
 </body>
 </html>
 
